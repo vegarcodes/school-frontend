@@ -7,3 +7,5 @@ export type Student = {
   created: string;
   updated: string;
 };
+
+export type NewStudent = Omit<Student, "id" | "created" | "updated">;
