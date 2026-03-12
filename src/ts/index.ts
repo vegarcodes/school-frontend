@@ -1,28 +1,7 @@
 import { getAllStudents, postStudent } from "./api/student.api";
 import type { NewStudent, Student } from "./types/student.type";
 
-try {
-  const students: Student[] = await getAllStudents();
-
-  let studentsList: HTMLUListElement | null =
-    document.querySelector("#students");
-
-  if (studentsList === null) {
-    studentsList = document.createElement("ul");
-    studentsList.setAttribute("id", "students");
-    document.body.appendChild(studentsList);
-  }
-
-  for (const student of students) {
-    const listElement: HTMLLIElement = document.createElement("li");
-    listElement.innerHTML = `Vår student ${student.name} har studentnummer ${student.id} og bor i ${student.address}.`;
-    studentsList.appendChild(listElement);
-  }
-} catch (error) {
-  alert("En feil har oppstått.");
-  console.log(error);
-}
-
+let studentsList = document.querySelector("#students") as HTMLUListElement;
 const addStudentTxt = document.getElementById(
   "add-student-txt",
 ) as HTMLInputElement;
@@ -30,7 +9,25 @@ const addStudentBtn = document.getElementById(
   "add-student-btn",
 ) as HTMLButtonElement;
 
+updateStudentsArray();
+showStudents();
 addStudentBtn.addEventListener("click", addStudent);
+
+async function updateStudentsArray() {
+  const students: Student[] = await getAllStudents();
+  return students;
+}
+
+async function showStudents() {
+  const students = await updateStudentsArray();
+  console.log("INNE I SHOWSTUDENTSARRAY", students);
+  studentsList.innerHTML = "";
+  for (const student of students) {
+    const listElement: HTMLLIElement = document.createElement("li");
+    listElement.innerHTML = `Vår student ${student.name} har studentnummer ${student.id} og bor i ${student.address}.`;
+    studentsList.appendChild(listElement);
+  }
+}
 
 function addStudent() {
   const addStudentTxtValue = addStudentTxt.value;
@@ -47,5 +44,6 @@ function addStudent() {
     };
 
     postStudent(newStudent);
+    showStudents();
   }
 }
