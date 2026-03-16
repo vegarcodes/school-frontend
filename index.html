@@ -11,10 +11,15 @@
     <main>
       <h1>Velkommen til Skurkeakademiet</h1>
       <h2>Legg til student</h2>
-      <input type="text" id="add-student-txt" placeholder="Skriv inn navn"/>
-      <button id="add-student-btn">Legg til student</button>
+      <form id="addStudentForm">
+        <input type="text" id="add-student-txt" placeholder="Skriv inn navn" required/>
+        <input type="text" id="add-address-txt" placeholder="Skriv inn adresse" required/>
+        <button type="submit">Legg til student</button>
+      </form>
       <p>Her er en liste over studenter på skolen vår:</p>
-      <ul id="students"></ul>
+      <section id="students"></section>
+      <hr>
+      <button type="button" id="resetBtn">Reset</button>
     </main>
     <script type="module" src="/src/ts/index.ts"></script>
   </body>

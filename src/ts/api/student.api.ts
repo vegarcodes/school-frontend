@@ -43,7 +43,7 @@ export async function postStudent(Student: NewStudent): Promise<Student> {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer aminatester12345",
+          Authorization: "Bearer SKURKEAPI",
         },
         body: JSON.stringify(Student),
       },
@@ -63,11 +63,53 @@ export async function deleteStudent(id: number): Promise<void> {
       {
         method: "DELETE",
         headers: {
-          Authorization: "Bearer aminatester12345",
+          Authorization: "Bearer SKURKEAPI",
         },
       },
     );
   } catch (error) {
     alert("Det skjedde noe galt med sletting" + error);
+  }
+}
+
+export async function resetStudents(): Promise<number> {
+  try {
+    const response: Response = await fetch("http://localhost:3000/api/reset", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer SKURKEAPI"
+      }
+    });
+
+    if(!response.ok) {
+      throw new Error("Noe gikk skeis");
+    }
+
+    return response.status;
+
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function editStudent(id: number, data: Partial<Student>): Promise<void> {
+  try {
+    const response: Response = await fetch(`http://localhost:3000/api/students/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer SKURKEAPI"
+      },
+      body: JSON.stringify(data)
+    });
+
+    if(!response.ok) {
+      throw new Error("Dette gikk skeis");
+    }
+
+    //return response.status;
+
+  } catch (error) {
+    console.error("Det har oppstått en feil", error);
   }
 }
