@@ -17,6 +17,7 @@ export async function getAllStudents(): Promise<Student[]> {
   }
 }
 
+
 export async function getStudent(id: number): Promise<Student> {
   try {
     const response: Response = await fetch(
@@ -34,7 +35,7 @@ export async function getStudent(id: number): Promise<Student> {
   }
 }
 
-//Legg til student
+
 export async function postStudent(Student: NewStudent): Promise<Student> {
   try {
     const response: Response = await fetch(
@@ -43,7 +44,7 @@ export async function postStudent(Student: NewStudent): Promise<Student> {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer SKURKEAPI",
+          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
         },
         body: JSON.stringify(Student),
       },
@@ -55,15 +56,15 @@ export async function postStudent(Student: NewStudent): Promise<Student> {
   }
 }
 
-//Slett student
+
 export async function deleteStudent(id: number): Promise<void> {
   try {
-    const response: Response = await fetch(
+    await fetch(
       `http://localhost:3000/api/students/${id}`,
       {
         method: "DELETE",
         headers: {
-          Authorization: "Bearer SKURKEAPI",
+          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
         },
       },
     );
@@ -72,12 +73,13 @@ export async function deleteStudent(id: number): Promise<void> {
   }
 }
 
+
 export async function resetStudents(): Promise<number> {
   try {
     const response: Response = await fetch("http://localhost:3000/api/reset", {
       method: "POST",
       headers: {
-        Authorization: "Bearer SKURKEAPI"
+        Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`
       }
     });
 
@@ -92,13 +94,14 @@ export async function resetStudents(): Promise<number> {
   }
 }
 
+
 export async function editStudent(id: number, data: Partial<Student>): Promise<void> {
   try {
     const response: Response = await fetch(`http://localhost:3000/api/students/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer SKURKEAPI"
+        Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`
       },
       body: JSON.stringify(data)
     });
@@ -106,8 +109,6 @@ export async function editStudent(id: number, data: Partial<Student>): Promise<v
     if(!response.ok) {
       throw new Error("Dette gikk skeis");
     }
-
-    //return response.status;
 
   } catch (error) {
     console.error("Det har oppstått en feil", error);
