@@ -58,7 +58,7 @@ export async function postStudent(Student: NewStudent): Promise<Student> {
 //Slett student
 export async function deleteStudent(id: number): Promise<void> {
   try {
-    const response: Response = await fetch(
+    await fetch(
       `${import.meta.env.VITE_CRUDOPS_URL}/api/students/${id}`,
       {
         method: "DELETE",
