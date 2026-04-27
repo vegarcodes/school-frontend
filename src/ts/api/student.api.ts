@@ -3,7 +3,7 @@ import { type NewStudent, type Student } from "../types/student.type";
 export async function getAllStudents(): Promise<Student[]> {
   try {
     const response: Response = await fetch(
-      "http://localhost:3000/api/students",
+      `${import.meta.env.VITE_API_URL}/api/students`,
     );
 
     if (!response.ok) {
@@ -20,7 +20,7 @@ export async function getAllStudents(): Promise<Student[]> {
 export async function getStudent(id: number): Promise<Student> {
   try {
     const response: Response = await fetch(
-      `http://localhost:3000/api/students/${id}`,
+      `${import.meta.env.VITE_API_URL}/api/students/${id}`,
     );
 
     if (!response.ok) {
@@ -38,12 +38,12 @@ export async function getStudent(id: number): Promise<Student> {
 export async function postStudent(Student: NewStudent): Promise<Student> {
   try {
     const response: Response = await fetch(
-      "http://localhost:3000/api/students",
+      `${import.meta.env.VITE_API_URL}/api/students`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer SKURKEAPI",
+          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
         },
         body: JSON.stringify(Student),
       },
@@ -59,11 +59,11 @@ export async function postStudent(Student: NewStudent): Promise<Student> {
 export async function deleteStudent(id: number): Promise<void> {
   try {
     const response: Response = await fetch(
-      `http://localhost:3000/api/students/${id}`,
+      `${import.meta.env.VITE_API_URL}/api/students/${id}`,
       {
         method: "DELETE",
         headers: {
-          Authorization: "Bearer SKURKEAPI",
+          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
         },
       },
     );
@@ -74,10 +74,12 @@ export async function deleteStudent(id: number): Promise<void> {
 
 export async function resetStudents(): Promise<number> {
   try {
-    const response: Response = await fetch("http://localhost:3000/api/reset", {
+    const response: Response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/reset`, 
+      {
       method: "POST",
       headers: {
-        Authorization: "Bearer SKURKEAPI"
+        Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`
       }
     });
 
@@ -94,11 +96,13 @@ export async function resetStudents(): Promise<number> {
 
 export async function editStudent(id: number, data: Partial<Student>): Promise<void> {
   try {
-    const response: Response = await fetch(`http://localhost:3000/api/students/${id}`, {
+    const response: Response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/students/${id}`, 
+      {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer SKURKEAPI"
+        Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`
       },
       body: JSON.stringify(data)
     });
